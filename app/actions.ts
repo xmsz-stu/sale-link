@@ -131,6 +131,8 @@ export async function getLink({
   skuViewId: string;
 }) {
   const meituan = new Meituan(appKey, appSecret);
+  let ok = true;
+  let message = '';
   const data = {
     1: '',
     3: '',
@@ -138,23 +140,30 @@ export async function getLink({
   await Promise.all(
     [1, 3].map(async (item) => {
       return (async () => {
-        const res = await meituan.sendRequest({
-          method: 'POST',
-          url: 'https://media.meituan.com/cps_open/common/api/v1/get_referral_link',
-          data: {
-            linkType: item, // 3 dp 1 h5
-            sid,
-            skuViewId,
-            platform: 2,
-            // bizLine: 5,
-          },
-        });
-        data[item as 1 | 3] = res.data;
+        try {
+          const res = await meituan.sendRequest({
+            method: 'POST',
+            url: 'https://media.meituan.com/cps_open/common/api/v1/get_referral_link',
+            data: {
+              linkType: item, // 3 dp 1 h5
+              sid,
+              skuViewId,
+              platform: 2,
+              // bizLine: 5,
+            },
+          });
+          data[item as 1 | 3] = res.data;
+        } catch (err) {
+          message = getErrMessage(err);
+          ok = false;
+        }
       })();
     })
   );
 
   return {
     data,
+    message,
+    ok,
   };
 }

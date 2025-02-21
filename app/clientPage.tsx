@@ -105,14 +105,7 @@ export default function ClientPage() {
             (n) => n.sid === item.sid && n.skuViewId === item.skuViewId
           );
 
-          try {
-            const res = await getLink({ ...rawFormData, ...item });
-            setResult((prev) =>
-              prev.map((n, index) =>
-                index === idx ? { ...n, ...res.data } : n
-              )
-            );
-          } catch (err) {
+          const onError = (err: unknown) => {
             const errorMsg = getErrMessage(err);
             setResult((prev) =>
               prev.map((n, index) =>
@@ -122,6 +115,21 @@ export default function ClientPage() {
               )
             );
             throw new Error(errorMsg);
+          };
+
+          try {
+            const res = await getLink({ ...rawFormData, ...item });
+            if (!res.ok) {
+              onError(new Error(res.message));
+              return;
+            }
+            setResult((prev) =>
+              prev.map((n, index) =>
+                index === idx ? { ...n, ...res.data } : n
+              )
+            );
+          } catch (err) {
+            onError(err);
           }
         })
       );
