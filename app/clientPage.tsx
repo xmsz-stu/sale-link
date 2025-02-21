@@ -149,7 +149,7 @@ export default function ClientPage() {
         <div className=' flex flex-col md:flex-row'>
           <Collapsible
             defaultOpen
-            className='w-1/2 md:min-w-[680px] md:shrink-0'
+            className='md:w-1/2 md:min-w-[680px] md:shrink-0'
           >
             <Card className=''>
               <CardHeader>
@@ -192,7 +192,7 @@ export default function ClientPage() {
               </CardHeader>
               <CollapsibleContent>
                 <CardContent className='pl-14'>
-                  <div className='grid grid-cols-2 gap-6'>
+                  <div className='md:grid grid-cols-2 gap-6'>
                     <div className=''>
                       <Label htmlFor='appKey'>AppKey</Label>
                       <Input
@@ -237,7 +237,7 @@ export default function ClientPage() {
           <Collapsible
             defaultOpen
             // className='mt-6'
-            className='md:ml-6 md:mt-0 mt-6 w-1/2'
+            className='md:ml-6 md:mt-0 mt-6 md:w-1/2'
           >
             <Card className=''>
               <CardHeader>
