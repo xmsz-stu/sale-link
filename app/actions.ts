@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 // const APP_KEY = '86a9aa10071e44e89907d6cec2b4ead4';
@@ -63,7 +64,7 @@ class Meituan {
   }
 
   url(config: AxiosRequestConfig<any>) {
-    let url = config.url;
+    const url = config.url;
     // 提取URL路径部分
     const path = '/' + url!.split('/').slice(3).join('/');
     if (

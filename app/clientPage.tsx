@@ -24,15 +24,13 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useRequest, useUpdateEffect } from 'ahooks';
-import { FormEvent, useActionState, useEffect, useRef, useState } from 'react';
+import { useRequest } from 'ahooks';
+import { FormEvent, useRef, useState } from 'react';
 import { getLink } from './actions';
 import showErrMessage, { getErrMessage } from '@/lib/showErrMessage';
 import { toast } from 'sonner';
@@ -54,7 +52,7 @@ export default function ClientPage() {
   >([]);
   const resultDom = useRef<HTMLDivElement>(null);
 
-  let submitId = useRef(0);
+  const submitId = useRef(0);
   const { runAsync, loading } = useRequest(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -80,7 +78,7 @@ export default function ClientPage() {
 
       resultDom.current?.scrollIntoView();
 
-      const list = skuViewIdArray.reduce((prev, cur, index) => {
+      const list = skuViewIdArray.reduce((prev, cur) => {
         prev.push(
           ...(sidArray.length ? sidArray : ['']).map((item) => {
             return {
@@ -99,7 +97,7 @@ export default function ClientPage() {
       // STEP: 进行请求
       const limit = pLimit(3);
       const curSubmitId = submitId.current;
-      const requests = list.map((item, i) =>
+      const requests = list.map((item) =>
         limit(async () => {
           if (submitId.current !== curSubmitId) return;
 
