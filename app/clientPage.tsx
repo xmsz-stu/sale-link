@@ -214,7 +214,7 @@ export default function ClientPage() {
                       />
                     </div>
                   </div>
-                  <div className='grid grid-cols-2 gap-6 mt-4'>
+                  <div className='md:grid grid-cols-2 gap-6 mt-4'>
                     <div className=''>
                       <Label htmlFor='sids'>SID</Label>
                       <Textarea
